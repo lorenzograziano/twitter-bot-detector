@@ -23,7 +23,8 @@ lazy val root = (project in file(".")).
     libraryDependencies += "nz.net.ultraq.thymeleaf" % "thymeleaf-layout-dialect" % "1.4.0",
     libraryDependencies += "com.h2database" % "h2" % "1.4.195",
     libraryDependencies += "org.webjars" % "bootstrap" % "3.1.1",
-    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.5"
+    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.5",
+    libraryDependencies += "mysql" % "mysql-connector-java" % "6.0.5"
   )
 
 
