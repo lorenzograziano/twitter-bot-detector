@@ -2,7 +2,7 @@ import Dependencies._
 
 //testCompile("org.springframework.boot:spring-boot-starter-test")
 
-lazy val springVersion = "1.5.4.RELEASE"
+lazy val springVersion = "1.5.3.RELEASE"
 lazy val thymeleafVersion = "2.1.5.RELEASE"
 
 resolvers += Resolver.sonatypeRepo("releases")
@@ -14,7 +14,7 @@ lazy val root = (project in file(".")).
       scalaVersion := "2.12.2",
       version      := "0.3.0"
     )),
-    name := "spring-boot-scala-web",
+    name := "twitter-bot-detector",
     libraryDependencies += scalaTest % Test,
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-web" % springVersion,
     libraryDependencies += "org.springframework.boot" % "spring-boot-starter-data-jpa" % springVersion,
@@ -23,8 +23,7 @@ lazy val root = (project in file(".")).
     libraryDependencies += "nz.net.ultraq.thymeleaf" % "thymeleaf-layout-dialect" % "1.4.0",
     libraryDependencies += "com.h2database" % "h2" % "1.4.195",
     libraryDependencies += "org.webjars" % "bootstrap" % "3.1.1",
-    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.5",
-    libraryDependencies += "org.springframework.data" % "spring-data-mongodb" % springVersion
+    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.5"
   )
 
 
