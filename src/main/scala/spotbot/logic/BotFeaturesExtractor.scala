@@ -2,10 +2,10 @@ package spotbot.logic
 
 import com.danielasfregola.twitter4s.TwitterRestClient
 import com.danielasfregola.twitter4s.entities._
-import spotbot.domain.{Bot, BotFeatureVector, BotFeatureVector}
+import spotbot.domain.{Bot, BotFeatureVector}
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Await
 
 object BotFeaturesExtractor {
 
