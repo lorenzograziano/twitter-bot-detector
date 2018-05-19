@@ -19,32 +19,32 @@
 					<form action="#" th:action="@{/bots/update}" method="post" th:object="${bot}" class="form-horizontal">
 						<input type="hidden" th:field="*{id}"/>
 						<div class="form-group">
-							<label for="name" class="col-xs-2">Name</label>
+							<label for="twitterName" class="col-xs-2">twitterName</label>
 							<div class="col-xs-6">
-								<input class="form-control" placeholder="Name" th:field="*{name}"/>
+								<input class="form-control" placeholder="twitterName" th:field="*{twitterName}"/>
 							</div>
 							<div class="col-xs-4">
-								<p class="text-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error with Name</p>
-							</div>						
-						</div>
-						<div class="form-group">
-							<label for="address" class="col-xs-2">Address</label>
-							<div class="col-xs-6">
-								<input class="form-control" placeholder="Address" th:field="*{address}"/>
-							</div>
-							<div class="col-xs-4">
-								<p class="text-warning" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Error with Address</p>
+								<p class="text-warning" th:if="${#fields.hasErrors('twitterName')}" th:errors="*{twitterName}">Error with Address</p>
 							</div>						
 						</div>		
 						<div class="form-group">
-							<label for="zip" class="col-xs-2">Zip</label>
+							<label for="idMarker" class="col-xs-2">idMarker</label>
 							<div class="col-xs-6">
-								<input class="form-control" placeholder="Zip" th:field="*{zip}"/>
+								<input class="form-control" placeholder="idMarker" th:field="*{idMarker}"/>
 							</div>
 							<div class="col-xs-4">
-								<p class="text-warning" th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}">Error with Zip</p>
+								<p class="text-warning" th:if="${#fields.hasErrors('idMarker')}" th:errors="*{idMarker}">Error with idMarker</p>
 							</div>						
-						</div>	
+						</div>
+						<div class="form-group">
+							<label for="markingDate" class="col-xs-2">markingDate</label>
+							<div class="col-xs-6">
+								<input class="form-control" placeholder="markingDate" th:field="*{markingDate}"/>
+							</div>
+							<div class="col-xs-4">
+								<p class="text-warning" th:if="${#fields.hasErrors('markingDate')}" th:errors="*{markingDate}">Error with markingDate</p>
+							</div>
+						</div>
 						<button type="submit" class="btn btn-default">Submit</button>							
 					</form>
 				</div>

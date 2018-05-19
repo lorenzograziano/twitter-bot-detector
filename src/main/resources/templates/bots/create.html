@@ -18,15 +18,6 @@
 				<div class="col-xs-12">
 					<form action="#" th:action="@{/bots/create}" method="POST" th:object="${bot}" class="form-horizontal">
 						<div class="form-group">
-							<label for="id" class="col-xs-2">id</label>
-							<div class="col-xs-6">
-								<input class="form-control" placeholder="id" th:field="*{id}"/>
-							</div>
-							<div class="col-xs-4">
-								<p class="text-warning" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">Error with id</p>
-							</div>
-						</div>
-						<div class="form-group">
 							<label for="twitterName" class="col-xs-2">twitterName</label>
 							<div class="col-xs-6">
 								<input class="form-control" placeholder="twitterName" th:field="*{twitterName}"/>

@@ -34,7 +34,7 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
     "bots/create"
   }
 
-  @PostMapping
+  @PostMapping(value = Array("/create"))
   def create(@Valid bot: Bot, bindingResult: BindingResult) =
     if (bindingResult.hasErrors()) {
       "bots/create"
