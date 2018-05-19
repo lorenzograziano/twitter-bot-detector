@@ -22,7 +22,7 @@ import scala.beans.BeanProperty
 class Bot extends Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.TABLE)
   @BeanProperty
   var id: Long = _
 

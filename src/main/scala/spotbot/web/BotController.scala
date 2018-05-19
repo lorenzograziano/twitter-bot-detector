@@ -39,6 +39,7 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
     if (bindingResult.hasErrors()) {
       "bots/create"
     } else {
+      bot.markingDate = System.currentTimeMillis()
       botRepository.save(bot)
       "redirect:/bots"
     }
