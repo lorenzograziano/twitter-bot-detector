@@ -1,22 +1,9 @@
 package spotbot.domain
 
 import javax.persistence._
-
-import org.hibernate.validator.constraints.NotEmpty
-
-import scala.annotation.meta.field
+import spotbot.logic.TwitterUtils.getFeatures
 import scala.beans.BeanProperty
 
-//@Entity
-//class Bot(@(Id @field) @(GeneratedValue @field) @BeanProperty var id: Int,
-//           @BeanProperty @(NotEmpty @field) var twitterName: String,
-//           @BeanProperty @(NotEmpty @field) var idMarker: String,
-//           @BeanProperty @(NotEmpty @field) var markingDate: Int
-////           @BeanProperty @(NotEmpty @field) var features: BotFeatureVect
-//          ) {
-//
-//  def this() = this(0, null, null, 0)
-//}
 
 @Entity
 class Bot extends Serializable {
@@ -37,5 +24,53 @@ class Bot extends Serializable {
   @BeanProperty
   @Column(name = "markingDate")
   var markingDate: Long = _
+
+  /**Features*/
+  @BeanProperty
+  @Column(name = "numTweets")
+  var numTweets: Int = _
+
+  @BeanProperty
+  @Column(name = "averageNumActivityPerDay")
+  var averageNumActivityPerDay: Double = _
+
+  @BeanProperty
+  @Column(name = "percentageRetweets")
+  var percentageRetweets: Double = _
+
+  @BeanProperty
+  @Column(name = "followingAccounts")
+  var followingAccounts: Int = _
+
+  @BeanProperty
+  @Column(name = "followersCount")
+  var followersCount: Int = _
+
+  @BeanProperty
+  @Column(name = "isVerified")
+  var isVerified: Int = _
+
+  @BeanProperty
+  @Column(name = "publicList")
+  var publicList: Int = _
+
+  @BeanProperty
+  @Column(name = "percentageOfCompletion")
+  var percentageOfCompletion: Double = _
+
+  def getBotWithFeatures(): Bot = {
+    val featureVector = getFeatures(this)
+    this.setNumTweets(featureVector.numTweets)
+    this.setAverageNumActivityPerDay(featureVector.averageNumActivityPerDay)
+    this.setPercentageRetweets(featureVector.percentageRetweets)
+    this.setFollowingAccounts(featureVector.followingAccounts)
+    this.setFollowersCount(featureVector.followersCount)
+    this.setIsVerified(featureVector.isVerified)
+    this.setPublicList(featureVector.publicList)
+    this.setPercentageOfCompletion(featureVector.percentageOfCompletion)
+
+    this
+  }
+
 
 }

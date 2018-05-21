@@ -1,7 +1,6 @@
 package spotbot.web
 
 import java.lang.Long
-
 import javax.validation.Valid
 import spotbot.domain.Bot
 import spotbot.service.BotRepository
@@ -40,7 +39,7 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
       "bots/create"
     } else {
       bot.markingDate = System.currentTimeMillis()
-      botRepository.save(bot)
+      botRepository.save(bot.getBotWithFeatures)
       "redirect:/bots"
     }
 
