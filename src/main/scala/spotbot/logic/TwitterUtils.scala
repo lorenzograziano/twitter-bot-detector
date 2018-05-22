@@ -31,7 +31,7 @@ val restClient = TwitterRestClient(
     BotFeatureVector(
       numTweets = tweets.length,
       averageNumActivityPerDay = average(tweets.groupBy(_.created_at).map(_._2.length).toSeq),
-      percentageRetweets = tweets.count(_.retweeted_status.isDefined)/tweets.length,
+      percentageRetweets = tweets.count(_.retweeted_status.isDefined).toDouble/tweets.length,
       followingAccounts = user.friends_count,
       followersCount = user.followers_count,
       isVerified = if ( user.verified ) 1 else 0,

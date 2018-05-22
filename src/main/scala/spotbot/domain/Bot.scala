@@ -25,7 +25,13 @@ class Bot extends Serializable {
   @Column(name = "markingDate")
   var markingDate: Long = _
 
-  /**Features*/
+  @BeanProperty
+  @Column(name = "isBot")
+  var isBot: Boolean = _
+
+  /**
+    * Features
+    * */
   @BeanProperty
   @Column(name = "numTweets")
   var numTweets: Int = _
