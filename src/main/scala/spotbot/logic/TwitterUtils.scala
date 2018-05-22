@@ -2,7 +2,7 @@ package spotbot.logic
 
 import com.danielasfregola.twitter4s.TwitterRestClient
 import com.danielasfregola.twitter4s.entities._
-import spotbot.domain.{Bot, BotFeatureVector}
+import spotbot.domain.{TwitterAccount, BotFeatureVector}
 import scala.concurrent.duration.Duration
 import scala.concurrent.Await
 
@@ -13,7 +13,7 @@ val restClient = TwitterRestClient(
     AccessToken("997092367361495041-XlhTtX5sozW0Mm4YUkU8IP7gC3d31Cc", "kI7KRO5Q3UO8QCfSD0BfcvKrwMP9LVaxMIGxJYzFXCgB3")
 )
 
-  def getFeatures(bot: Bot): BotFeatureVector = {
+  def getFeatures(bot: TwitterAccount): BotFeatureVector = {
 
     /**Get tweets related features*/
     val userTimeLine = restClient.userTimelineForUser(bot.twitterName)

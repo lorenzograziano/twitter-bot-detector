@@ -6,7 +6,7 @@ import scala.beans.BeanProperty
 
 
 @Entity
-class Bot extends Serializable {
+class TwitterAccount extends Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)
@@ -64,7 +64,7 @@ class Bot extends Serializable {
   @Column(name = "percentageOfCompletion")
   var percentageOfCompletion: Double = _
 
-  def getBotWithFeatures(): Bot = {
+  def getBotWithFeatures(): TwitterAccount = {
     val featureVector = getFeatures(this)
     this.setNumTweets(featureVector.numTweets)
     this.setAverageNumActivityPerDay(featureVector.averageNumActivityPerDay)
