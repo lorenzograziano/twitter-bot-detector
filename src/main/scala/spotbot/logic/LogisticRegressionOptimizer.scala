@@ -7,7 +7,7 @@ class LogisticRegressionOptimizer(X: Vector[Vector[Double]],
                                   numIter: Int,
                                   alpha: Double) {
 
-  def optimize(): Vector[Double] = {
+  def optimize() = {
 
     var res = theta
 
@@ -24,7 +24,7 @@ class LogisticRegressionOptimizer(X: Vector[Vector[Double]],
       }
     )
 
-    res
+    LogisticRegression.theta = res
 
   }
 
