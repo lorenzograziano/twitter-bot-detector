@@ -10,13 +10,13 @@ import spotbot.domain.{TwitterAccount, BotRequest}
 import spotbot.service.BotRequestRepository
 
 @Controller
-@RequestMapping(Array("/bots"))
+@RequestMapping(Array("/botRequest"))
 class BotRequestController @Autowired()(private val botRequestRepository: BotRequestRepository) {
 
   @GetMapping(params = Array("askForm"))
   def createAskForm(model: Model) = {
     model.addAttribute("botRequest", new BotRequest())
-    "/ask"
+    "bots/ask"
   }
 
   @PostMapping(value = Array("/ask"))

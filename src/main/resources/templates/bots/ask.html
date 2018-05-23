@@ -16,7 +16,7 @@
 		<div layout:fragment="content">
 			<div class="row">
 				<div class="col-xs-12">
-					<form action="#" th:action="@{/bots/ask}" method="POST" th:object="${bot}" class="form-horizontal">
+					<form action="#" th:action="@{/bots/ask}" method="POST" th:object="${botRequest}" class="form-horizontal">
 						<div class="form-group">
 							<label for="twitterName" class="col-xs-2">twitterName</label>
 							<div class="col-xs-6">
@@ -25,6 +25,15 @@
 							<div class="col-xs-4">
 								<p class="text-warning" th:if="${#fields.hasErrors('twitterName')}" th:errors="*{twitterName}">Error with twitterName</p>
 							</div>			
+						</div>
+						<div class="form-group">
+							<label for="idMarker" class="col-xs-2">idMarker</label>
+							<div class="col-xs-6">
+								<input class="form-control" placeholder="idMarker" th:field="*{idMarker}"/>
+							</div>
+							<div class="col-xs-4">
+								<p class="text-warning" th:if="${#fields.hasErrors('idMarker')}" th:errors="*{idMarker}">Error with idMarker</p>
+							</div>
 						</div>
 						<button type="submit" class="btn btn-default">Submit</button>							
 					</form>
