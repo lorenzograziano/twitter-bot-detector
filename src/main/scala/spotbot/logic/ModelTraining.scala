@@ -62,7 +62,7 @@ object ModelTraining {
       * Logistic Regression Model
       **/
     val optimizer =
-      new LogisticRegressionOptimizer(x, y, theta, lambda = .1, numIter = 10000, alpha = .1)
+      new LogisticRegressionOptimizer(x, y, theta, lambda = .1, numIter = 100, alpha = .1)
 
     optimizer.optimize()
 
@@ -94,8 +94,13 @@ object ModelTraining {
     val precision = truePositive.toDouble / (truePositive + falsePositive)
     val recall = truePositive.toDouble / (truePositive + falseNegative)
 
-    System.out.println("PRECISION " + precision)
+    System.out.println("truePositive " + truePositive)
+    System.out.println("falsePositive "+ falsePositive)
+    System.out.println("falseNegative "+ falseNegative)
+
+    System.out.println("Precision " + precision)
     System.out.println("Recall "+ recall)
+
 
 
 

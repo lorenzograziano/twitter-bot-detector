@@ -6,7 +6,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation._
-import spotbot.domain.{TwitterAccount, BotRequest}
+import spotbot.domain.{BotFeatureVector, BotRequest, TwitterAccount}
+import spotbot.logic.{LogisticRegression, ModelTraining, TwitterUtils}
 import spotbot.service.BotRequestRepository
 
 @Controller
@@ -16,15 +17,19 @@ class BotRequestController @Autowired()(private val botRequestRepository: BotReq
   @GetMapping(params = Array("askForm"))
   def createAskForm(model: Model) = {
     model.addAttribute("botRequest", new BotRequest())
-    "bots/ask"
+    "botRequest/ask"
   }
 
   @PostMapping(value = Array("/ask"))
-  def ask(@Valid bot: TwitterAccount, bindingResult: BindingResult) =
-    if (bindingResult.hasErrors()) {
-      "bots/create"
-    } else {
-      "bots/create"
+  def ask(model: Model, @Valid bot: TwitterAccount, bindingResult: BindingResult) = {
+
+    val vec = ModelTraining.getX( List(bot.getBotWithFeatures()))
+    val prob = LogisticRegression.hTheta(vec.head)
+
+    model.addAttribute("botName", bot.twitterName)
+    model.addAttribute("probability", prob)
+
+    "botRequest/askResult"
     }
 
 }
