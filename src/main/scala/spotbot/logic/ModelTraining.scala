@@ -3,6 +3,7 @@ package spotbot.logic
 import spotbot.domain.TwitterAccount
 import spotbot.service.BotRepository
 
+import scala.collection.immutable
 import scala.util.Random
 
 
@@ -23,12 +24,12 @@ object ModelTraining {
 
     val botList = allTwitterAccountList
       .filter(account => account.isBot)
-    val splitBot = (botList.length * 0.8).round.toInt
+    val splitBot = (botList.length * 0.75).round.toInt
     val (trainingSetBot, validationSetBot) = botList.splitAt(splitBot)
 
     val userList = allTwitterAccountList
       .filter(account => !account.isBot)
-    val splitUser = (userList.length * 0.8).round.toInt
+    val splitUser = (userList.length * 0.75).round.toInt
 
     val (trainingSetUser, validationSetUser) = userList.splitAt(splitUser)
     val trainingSetList = trainingSetBot ++ trainingSetUser
@@ -41,26 +42,16 @@ object ModelTraining {
     System.out.println(s"trainingSetBot ${trainingSetBot.size}")
     System.out.println(s"validationSetBot ${validationSetBot.size}")
 
-    val x = getX(trainingSetList)
-    val y = getY(trainingSetList)
+    val x: Array[Array[Double]] = getX(trainingSetList)
+    val normX = normalize(x)
 
-    val rnd = new Random()
-    val theta = Vector(
-      rnd.nextGaussian(),
-      rnd.nextGaussian(),
-      rnd.nextGaussian(),
-      rnd.nextGaussian(),
-      rnd.nextGaussian(),
-      rnd.nextGaussian(),
-      rnd.nextGaussian(),
-      rnd.nextGaussian()
-    )
+    val y = getY(trainingSetList)
 
     /**
       * Logistic Regression Model
       **/
     val optimizer =
-      new LogisticRegressionOptimizer(x, y, theta, lambda = 0.01, numIter = 5000, alpha = 1)
+      new LogisticRegressionOptimizer(normX, y, LogisticRegression.theta, lambda = 0.01, numIter = 10000, alpha = 0.1)
 
     optimizer.optimize()
 
@@ -68,9 +59,10 @@ object ModelTraining {
       * Validation
       * */
     val xTest = getX(validationSet)
-    val yTest: Vector[Double] = getY(validationSet)
+    val xTestNorm = normalize(xTest)
+    val yTest: Array[Double] = getY(validationSet)
 
-    val yPred: Vector[Double] = xTest.map(
+    val yPred: Array[Double] = xTestNorm.map(
       x => LogisticRegression.hTheta(x)
     )
 
@@ -92,6 +84,9 @@ object ModelTraining {
     val precision = truePositive.toDouble / (truePositive + falsePositive)
     val recall = truePositive.toDouble / (truePositive + falseNegative)
 
+    System.out.println("positive " + yTest.count(x=>x==1))
+    System.out.println("negative " + yTest.count(x=>x==0))
+
     System.out.println("truePositive " + truePositive)
     System.out.println("falsePositive "+ falsePositive)
     System.out.println("falseNegative "+ falseNegative)
@@ -107,24 +102,58 @@ object ModelTraining {
 
   }
 
-  def getX(list: List[TwitterAccount]): Vector[Vector[Double]] =
+  def getX(list: List[TwitterAccount]): Array[Array[Double]] =
     list.map(
       twitterAccount =>
-        Vector(
+        Array(
           1.0,
-          twitterAccount.getNumTweets,
+          twitterAccount.getNumTweets.toDouble,
           twitterAccount.getAverageNumActivityPerDay,
           twitterAccount.getPercentageRetweets,
-          twitterAccount.getFollowingAccounts,
-          twitterAccount.getFollowersCount,
-          twitterAccount.getPublicList,
+          twitterAccount.getFollowingAccounts.toDouble,
+          twitterAccount.getFollowersCount.toDouble,
+          twitterAccount.getPublicList.toDouble,
           twitterAccount.getPercentageOfCompletion
         )
-    ).toVector
+    ).toArray
 
-  def getY(list:List[TwitterAccount]):Vector[Double] =
+  def getY(list:List[TwitterAccount]):Array[Double] =
     list.map(
       twitterAccount =>
         if (twitterAccount.getIsBot) 1.0 else 0.0
-    ).toVector
+    ).toArray
+
+  def normalize(x: Array[Array[Double]]): Array[Array[Double]] = {
+
+    val xT: Array[Array[Double]] = x.transpose
+
+    val xAvg: Seq[Double] = xT.map{
+
+      feature =>
+
+        feature.foldLeft((0.0, 1)) { case ((avg, idx), next) => (avg + (next - avg)/idx, idx + 1) }._1
+
+    }.toArray
+
+    val xStdDev: Seq[Double] = xT.zip(xAvg).map{
+
+      case (feature, mean) =>
+
+        val sqrMeanError = feature.map( x => (x - mean)*(x - mean) )
+
+        sqrMeanError.foldLeft((0.0, 1)) { case ((avg, idx), next) => (avg + (next - avg)/idx, idx + 1) }._1
+
+    }.toArray
+
+    val normX: Array[Array[Double]] = x.map(
+      y =>
+        y.zip(0.0 +: xAvg.tail).zip(1.0 +: xStdDev.tail).map(
+          z =>
+            (z._1._1 - z._1._2) / (z._2)
+        )
+    )
+
+    normX
+
+  }
 }
