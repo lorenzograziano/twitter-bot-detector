@@ -23,15 +23,6 @@ object populateDb extends App{
   //  ("Self-care bots ", "clairesayswhat"),
   //  ("Chatbots on Twitter ", "SamSchmir"))
 
-  //def extractBot(listUser: Seq[(String, String)]): Set[String] = {
-  //  var bots = Seq.empty
-  //  listUser.map{
-  //    (list, user) =>
-  //
-  //      bots ++ restClient.listMembersBySlugAndOwnerName(list, user)
-  //
-  //  }
-
   val botList = restClient.listMembersBySlugAndOwnerName("omnibots", "botALLY", count = 100)
 
   val bots: RatedData[Users] = Await.result(botList, Duration(1000, "seconds"))
