@@ -62,7 +62,7 @@ object ModelTraining {
       * Logistic Regression Model
       **/
     val optimizer =
-      new LogisticRegressionOptimizer(x, y, theta, lambda = .1, numIter = 100, alpha = .1)
+      new LogisticRegressionOptimizer(x, y, theta, lambda = 0.01, numIter = 5000, alpha = 1)
 
     optimizer.optimize()
 
