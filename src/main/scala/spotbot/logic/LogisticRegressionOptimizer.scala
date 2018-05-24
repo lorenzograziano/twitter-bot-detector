@@ -1,8 +1,8 @@
 package spotbot.logic
 
-class LogisticRegressionOptimizer(X: Vector[Vector[Double]],
-                                  Y: Vector[Double],
-                                  theta: Vector[Double],
+class LogisticRegressionOptimizer(X: Array[Array[Double]],
+                                  Y: Array[Double],
+                                  theta: Array[Double],
                                   lambda: Double,
                                   numIter: Int,
                                   alpha: Double) {
@@ -19,7 +19,7 @@ class LogisticRegressionOptimizer(X: Vector[Vector[Double]],
 
         if(j % 100 == 0) {
           System.out.println(j)
-          System.out.println(res)
+          System.out.println(res.toVector)
         }
         LogisticRegression.theta = res
 
