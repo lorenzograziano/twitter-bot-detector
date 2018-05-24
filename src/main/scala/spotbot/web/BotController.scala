@@ -45,6 +45,13 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
       botRepository.save(bot.getBotWithFeatures)
       "redirect:/bots"
     }
+  @PostMapping(value = Array("/createUser"))
+  def createUser(@Valid bot: TwitterAccount, bindingResult: BindingResult) = {
+      bot.markingDate = System.currentTimeMillis()
+      bot.isBot = false
+      botRepository.save(bot.getBotWithFeatures)
+      "redirect:/bots"
+    }
 
 
   @PostMapping(value = Array("/update"))
