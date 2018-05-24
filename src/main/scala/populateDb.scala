@@ -5,7 +5,6 @@ object populateDb extends App{
 
   import com.danielasfregola.twitter4s.TwitterRestClient
   import com.danielasfregola.twitter4s.entities._
-  import scalaj.http.{Http, HttpOptions}
 
 
   import scala.concurrent.Await
@@ -44,8 +43,8 @@ object populateDb extends App{
 
   val usersName = users.data.users.map(_.screen_name)
 
-  val file = new File("/home/lorenzo/Documenti/bot.txt")
-  val fileUser = new File("/home/lorenzo/Documenti/user.txt")
+  val file = new File("/Users/fabriziocairo/bot.txt")
+  val fileUser = new File("/Users/fabriziocairo/user.txt")
 
   val bw = new BufferedWriter(new FileWriter(file))
   val user = new BufferedWriter(new FileWriter(fileUser))
