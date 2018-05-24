@@ -34,8 +34,8 @@ object populateDb extends App{
 
   val usersName = users.data.users.map(_.screen_name)
 
-  val file = new File("/Users/fabriziocairo/bot.txt")
-  val fileUser = new File("/Users/fabriziocairo/user.txt")
+  val file = new File("/home/stefano/Documents/bot.txt")
+  val fileUser = new File("/home/stefano/Documents/user.txt")
 
   val bw = new BufferedWriter(new FileWriter(file))
   val user = new BufferedWriter(new FileWriter(fileUser))
