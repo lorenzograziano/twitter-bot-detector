@@ -1,7 +1,5 @@
 package spotbot.logic
 
-import java.util
-
 import spotbot.domain.TwitterAccount
 import spotbot.service.BotRepository
 

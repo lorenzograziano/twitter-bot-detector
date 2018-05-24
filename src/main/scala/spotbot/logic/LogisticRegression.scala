@@ -1,10 +1,22 @@
 package spotbot.logic
 
+import scala.util.Random
+
 object LogisticRegression {
 
   var lambda: Double = _
 
-  var theta: Vector[Double] = _
+  private val rnd = new Random()
+  var theta = Vector(
+    rnd.nextGaussian(),
+    rnd.nextGaussian(),
+    rnd.nextGaussian(),
+    rnd.nextGaussian(),
+    rnd.nextGaussian(),
+    rnd.nextGaussian(),
+    rnd.nextGaussian(),
+    rnd.nextGaussian()
+  )
 
   def sigmoid(z: Double): Double = 1.0 / (1.0 + math.exp(-z))
 
