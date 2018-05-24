@@ -14,7 +14,11 @@ class LogisticRegressionOptimizer(X: Vector[Vector[Double]],
     LogisticRegression.lambda = lambda
 
     (1 to numIter).foreach(
+
       j => {
+
+        if(j % 100 == 0)
+          System.out.println(j)
 
         LogisticRegression.theta = res
 

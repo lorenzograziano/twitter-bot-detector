@@ -30,7 +30,7 @@ val restClient = TwitterRestClient(
     //val createdAt = user.created_at
     BotFeatureVector(
       numTweets = tweets.length,
-      averageNumActivityPerDay = average(tweets.groupBy(_.created_at).map(_._2.length).toSeq),
+      averageNumActivityPerDay = average(tweets.groupBy(_.created_at.toString.substring(0,10)).map(_._2.length).toSeq),
       percentageRetweets = tweets.count(_.retweeted_status.isDefined).toDouble/tweets.length,
       followingAccounts = user.friends_count,
       followersCount = user.followers_count,

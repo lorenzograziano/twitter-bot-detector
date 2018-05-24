@@ -16,11 +16,12 @@ object ModelTraining {
       **/
     val allTwitterAccounts = botRepository.findAll()
 
-    val allTwitterAccountList: List[TwitterAccount] = List()
-    val accountIterator: util.Iterator[TwitterAccount] = allTwitterAccounts.iterator()
+    var allTwitterAccountList: List[TwitterAccount] = List()
+    val accountIterator = allTwitterAccounts.iterator()
 
-    accountIterator
-      .forEachRemaining(x => allTwitterAccountList :+ x)
+    while (accountIterator.hasNext){
+      allTwitterAccountList = allTwitterAccountList :+ accountIterator.next()
+    }
 
     val botList = allTwitterAccountList
       .filter(account => account.isBot)
@@ -30,19 +31,19 @@ object ModelTraining {
     val userList = allTwitterAccountList
       .filter(account => !account.isBot)
     val splitUser = (userList.length * 0.8).round.toInt
-    val (trainingSetUser, validationSetUser) = botList.splitAt(splitUser)
 
+    val (trainingSetUser, validationSetUser) = userList.splitAt(splitUser)
     val trainingSetList = trainingSetBot ++ trainingSetUser
     val validationSet = validationSetBot ++ validationSetUser
 
+    System.out.println(s"userList ${userList.size}")
+    System.out.println(s"traningSetUser ${trainingSetUser.size}")
+    System.out.println(s"validationSetUser ${validationSetUser.size}")
+    System.out.println(s"botList ${botList.size}")
+    System.out.println(s"trainingSetBot ${trainingSetBot.size}")
+    System.out.println(s"validationSetBot ${validationSetBot.size}")
+
     val x = getX(trainingSetList)
-
-    val avgX = x.map{
-      x =>
-
-    }
-
-
     val y = getY(trainingSetList)
 
     val rnd = new Random()
@@ -92,6 +93,12 @@ object ModelTraining {
 
     val precision = truePositive.toDouble / (truePositive + falsePositive)
     val recall = truePositive.toDouble / (truePositive + falseNegative)
+
+    System.out.println("PRECISION " + precision)
+    System.out.println("Recall "+ recall)
+
+
+
 
     (precision, recall)
 
