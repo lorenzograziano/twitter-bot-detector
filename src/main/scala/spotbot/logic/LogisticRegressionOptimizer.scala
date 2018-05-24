@@ -17,9 +17,10 @@ class LogisticRegressionOptimizer(X: Vector[Vector[Double]],
 
       j => {
 
-        if(j % 100 == 0)
+        if(j % 100 == 0) {
           System.out.println(j)
-
+          System.out.println(res)
+        }
         LogisticRegression.theta = res
 
         val step = LogisticRegression.calculateGradient(X, Y).map(x => x * alpha)

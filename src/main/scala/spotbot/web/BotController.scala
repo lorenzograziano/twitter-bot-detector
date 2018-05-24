@@ -70,7 +70,7 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
       model.addAttribute("precision", result._1)
       model.addAttribute("recall", result._2)
 
-    "redirect:/bots/resultOfTrain"
+    "/bots/resultOfTrain"
     }
 
 
