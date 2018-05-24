@@ -5,6 +5,8 @@ import java.util
 import spotbot.domain.TwitterAccount
 import spotbot.service.BotRepository
 
+import scala.util.Random
+
 
 object ModelTraining {
 
@@ -34,9 +36,26 @@ object ModelTraining {
     val validationSet = validationSetBot ++ validationSetUser
 
     val x = getX(trainingSetList)
-    val y = getY(trainingSetList)
-    val theta = Vector(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 
+    val avgX = x.map{
+      x =>
+
+    }
+
+
+    val y = getY(trainingSetList)
+
+    val rnd = new Random()
+    val theta = Vector(
+      rnd.nextGaussian(),
+      rnd.nextGaussian(),
+      rnd.nextGaussian(),
+      rnd.nextGaussian(),
+      rnd.nextGaussian(),
+      rnd.nextGaussian(),
+      rnd.nextGaussian(),
+      rnd.nextGaussian()
+    )
 
     /**
       * Logistic Regression Model
@@ -88,7 +107,6 @@ object ModelTraining {
           twitterAccount.getPercentageRetweets,
           twitterAccount.getFollowingAccounts,
           twitterAccount.getFollowersCount,
-          twitterAccount.getIsVerified,
           twitterAccount.getPublicList,
           twitterAccount.getPercentageOfCompletion
         )
