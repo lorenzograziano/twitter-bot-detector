@@ -31,13 +31,15 @@
 								<td colspan="5">No messages</td>
 							</tr>
 							<tr th:each="bot : ${bots}">
-								<td th:text="${bot.id}">1</td>
-								<td th:text="${bot.twitterName}">Test Name 1</td>
-								<td th:text="${bot.idMarker}">Test Address 1</td>
-								<td th:text="${bot.markingDate}">Test Zip 1</td>
-								<td><a th:href="@{/bots/edit/__${bot.id}__}" href="#">Edit</a>
-									| <a th:href="@{/bots/delete/__${bot.id}__}" href="#">Delete</a>
-								</td>
+								<tr th:if="${bot.isBot}">
+									<td th:text="${bot.id}">1</td>
+									<td th:text="${bot.twitterName}">Test Name 1</td>
+									<td th:text="${bot.idMarker}">Test Address 1</td>
+									<td th:text="${bot.markingDate}">Test Zip 1</td>
+									<td><a th:href="@{/bots/edit/__${bot.id}__}" href="#">Edit</a>
+										| <a th:href="@{/bots/delete/__${bot.id}__}" href="#">Delete</a>
+									</td>
+								</tr>
 							</tr>
 						</tbody>
 					</table>
