@@ -1,7 +1,6 @@
 import com.danielasfregola.twitter4s.TwitterRestClient
 import com.danielasfregola.twitter4s.entities._
-import spotbot.domain.Bot
-import spotbot.domain.BotFeatureVector
+import spotbot.domain.{BotFeatureVector, TwitterAccount}
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -35,7 +34,7 @@ val restClient = TwitterRestClient(
 //println(tweet.user)
 //println(tweet2.data.user)
 
-val bot1 = new Bot()
+val bot1 = new TwitterAccount()
 
 bot1.twitterName = "netflix_bot"
 bot1.idMarker =  "SS"
@@ -61,7 +60,7 @@ def countQualifyingInfo(user: User): Double = {
 
 }
 
-def getFeatures(bot: Bot) = {
+def getFeatures(bot: TwitterAccount) = {
 
   //Get all the tweets for the selected user
   val userTimeLine = restClient.userTimelineForUser(bot.twitterName)

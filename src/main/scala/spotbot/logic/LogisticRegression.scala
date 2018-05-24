@@ -23,8 +23,11 @@ object LogisticRegression {
   def calculateGradient(X: Vector[Vector[Double]] , Y: Vector[Double]): Vector[Double] = {
     val m = X.size
     (0 until theta.length).map {
-      j =>
-        (1 / m) * X.map( x => (hTheta(x) - Y(X.indexOf(x))) * x(j) ).sum + (lambda / m) * theta(j)
+      j => {
+        if (j == 0) (1 / m) * X.map( x => (hTheta(x) - Y(X.indexOf(x))) * x(j) ).sum
+        else (1 / m) * X.map( x => (hTheta(x) - Y(X.indexOf(x))) * x(j) ).sum + (lambda / m) * theta(j)
+      }
+
     }.toVector
   }
 
