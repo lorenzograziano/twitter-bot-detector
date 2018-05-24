@@ -1,6 +1,7 @@
 package spotbot.web
 
 import java.lang.Long
+
 import javax.validation.Valid
 import spotbot.domain.TwitterAccount
 import spotbot.service.BotRepository
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation._
+import spotbot.logic.ModelTraining
 
 @Controller
 @RequestMapping(Array("/bots"))
@@ -53,6 +55,13 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
       botRepository.save(bot)
       "redirect:/bots"
     }
+
+  @PostMapping(value = Array("/train"))
+  def train() = {
+      ModelTraining.train(botRepository)
+      "redirect:/bots"
+    }
+
 
 
   @GetMapping(value = Array("/delete/{id}"))
