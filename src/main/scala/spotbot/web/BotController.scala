@@ -64,7 +64,7 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
       "redirect:/bots"
     }
 
-  @PostMapping(value = Array("/train"))
+  @GetMapping(value = Array("/train"))
   def train(model: Model) = {
       val result = ModelTraining.train(botRepository)
       model.addAttribute("precision", result._1)
