@@ -28,8 +28,9 @@ class BotRequestController @Autowired()(private val botRequestRepository: BotReq
     bot.twitterName = botRequest.twitterName
 
     //Get features and make prediction
-    val vec = ModelTraining.getX( List(bot.getBotWithFeatures()))
-    val prob = LogisticRegression.hTheta(vec.head)
+    val vec = ModelTraining.getXY( List(bot.getBotWithFeatures()))
+    val normVec = ModelTraining.normalize(vec.map(_._1))
+    val prob = LogisticRegression.hTheta(normVec.head)
 
     //Save botRequest
     botRequest.probabilityBot = prob
