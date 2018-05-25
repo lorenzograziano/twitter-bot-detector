@@ -28,11 +28,11 @@ object ModelTraining {
 
     val botList: immutable.Seq[TwitterAccount] = allTwitterAccountList
       .filter(account => account.isBot)
-    val splitBot = (botList.length * 0.75).round.toInt
+    val splitBot = (botList.length * 0.7).round.toInt
 
     val userList: immutable.Seq[TwitterAccount] = allTwitterAccountList
       .filter(account => !account.isBot)
-    val splitUser = (userList.length * 0.75).round.toInt
+    val splitUser = (userList.length * 0.7).round.toInt
 
     val data = getXY(botList ++ userList)
 
@@ -43,10 +43,10 @@ object ModelTraining {
 
     val (trainingSetUser, validationSetUser) = normDataUser.splitAt(splitUser)
     val (trainingSetBot, validationSetBot) = normDataBot.splitAt(splitBot)
-    val trainingSetX = trainingSetBot ++ trainingSetUser
-    val trainingSetY = trainingSetBot.map( x => 0.0) ++ trainingSetUser.map( x => 1.0)
-    val validationSetX = validationSetBot ++ validationSetUser
-    val validationSetY = validationSetBot.map( x => 0.0) ++ validationSetUser.map( x => 1.0)
+    val trainingSetX: Array[Array[Double]] = trainingSetBot ++ trainingSetUser
+    val trainingSetY: Array[Double] = trainingSetBot.map(x => 1.0) ++ trainingSetUser.map(x => 0.0)
+    val validationSetX: Array[Array[Double]] = validationSetBot ++ validationSetUser
+    val validationSetY: Array[Double] = validationSetBot.map(x => 1.0) ++ validationSetUser.map(x => 0.0)
 
     System.out.println(s"userList ${userList.size}")
     System.out.println(s"traningSetUser ${trainingSetUser.size}")
@@ -75,17 +75,17 @@ object ModelTraining {
 
     val truePositive = result
       .count{
-        case(yP: Double, yT: Double) => yP == yT && yP == 1
+        case(yP: Double, yT: Double) => yP == yT && yP == 1.0
       }
 
     val falsePositive = result
       .count {
-        case(yP: Double, yT: Double) => yP == 1 && yP != yT
+        case(yP: Double, yT: Double) => yP == 1.0 && yP != yT
       }
 
     val falseNegative = result
       .count {
-        case(yP: Double, yT: Double) => yP == 0 && yP != yT
+        case(yP: Double, yT: Double) => yP == 0.0 && yP != yT
       }
 
     val precision = truePositive.toDouble / (truePositive + falsePositive)
