@@ -2,7 +2,7 @@ package spotbot.logic
 
 import com.danielasfregola.twitter4s.TwitterRestClient
 import com.danielasfregola.twitter4s.entities._
-import spotbot.domain.{TwitterAccount, BotFeatureVector}
+import spotbot.domain.{BotFeatureVector, ListUserAccount, TwitterAccount}
 import scala.concurrent.duration.Duration
 import scala.concurrent.Await
 
@@ -57,6 +57,20 @@ val restClient = TwitterRestClient(
     user.email.isDefined)
 
     profileInfos.count(x => x)/7.0
+  }
+
+  def getListOfTwitterAccount(listUserAccount: ListUserAccount): Seq[String] = {
+
+    val firstUserList =
+      restClient.listMembersBySlugAndOwnerName(
+        listUserAccount.slug,
+        listUserAccount.ownerList,
+        count = 1000
+      )
+
+    val firstUsers = Await.result(firstUserList, Duration(1000, "seconds"))
+
+    firstUsers.data.users.map(_.screen_name)
   }
 
 }

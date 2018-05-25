@@ -3,14 +3,14 @@ package spotbot.web
 import java.lang.Long
 
 import javax.validation.Valid
-import spotbot.domain.TwitterAccount
+import spotbot.domain.{ListUserAccount, TwitterAccount}
 import spotbot.service.BotRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation._
-import spotbot.logic.ModelTraining
+import spotbot.logic.{ModelTraining, TwitterUtils}
 
 @Controller
 @RequestMapping(Array("/bots"))
@@ -34,6 +34,33 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
     model.addAttribute("bot", new TwitterAccount())
     "bots/create"
   }
+
+  @GetMapping(params = Array("formListUser"))
+  def createFormListAccount(model: Model) = {
+    model.addAttribute("listUser", new ListUserAccount())
+    "bots/createList"
+  }
+
+  @PostMapping(value = Array("/createList"))
+  def createList(@Valid listUser: ListUserAccount, bindingResult: BindingResult) =
+    if (bindingResult.hasErrors()) {
+      "bots/createList"
+    } else {
+      System.out.println("Creator: "+listUser.ownerList)
+
+      val listUserAccount = TwitterUtils.getListOfTwitterAccount(listUser)
+      System.out.println("first user: "+listUserAccount.head)
+      listUserAccount.foreach{
+        accountName =>
+          val account = new TwitterAccount()
+          account.twitterName = accountName
+          account.idMarker = "Admin"
+          account.markingDate = System.currentTimeMillis()
+          account.isBot = listUser.isBotList
+          botRepository.save(account.getBotWithFeatures)
+      }
+      "redirect:/bots"
+    }
 
   @PostMapping(value = Array("/create"))
   def create(@Valid bot: TwitterAccount, bindingResult: BindingResult) =
