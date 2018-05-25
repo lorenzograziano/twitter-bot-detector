@@ -16,8 +16,8 @@ class BotRequest extends Serializable {
   var twitterName: String = _
 
   @BeanProperty
-  @Column(name = "idMarker")
-  var idMarker: String = _
+  @Column(name = "Asker")
+  var asker: String = _
 
   @BeanProperty
   @Column(name = "requestDate")

@@ -42,6 +42,7 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
     } else {
       bot.markingDate = System.currentTimeMillis()
       bot.isBot = true
+      if (bot.idMarker.isEmpty) bot.idMarker = "Admin"
       botRepository.save(bot.getBotWithFeatures)
       "redirect:/bots"
     }

@@ -22,17 +22,23 @@ object populateDb extends App{
   //  ("Self-care bots ", "clairesayswhat"),
   //  ("Chatbots on Twitter ", "SamSchmir"))
 
-  val botList = restClient.listMembersBySlugAndOwnerName("omnibots", "botALLY", count = 100)
+  val botList = restClient.listMembersBySlugAndOwnerName("omnibots", "botALLY", count = 250)
 
   val bots: RatedData[Users] = Await.result(botList, Duration(1000, "seconds"))
 
   val botsName = bots.data.users.map(_.screen_name)
 
-  val userList = restClient.listMembersBySlugAndOwnerName("tech", "davidebradford", count = 500)
+  val firstUserList = restClient.listMembersBySlugAndOwnerName("verified accounts", "verified", count = 450)
 
-  val users = Await.result(userList, Duration(1000, "seconds"))
+  val firstUsers = Await.result(firstUserList, Duration(1000, "seconds"))
 
-  val usersName = users.data.users.map(_.screen_name)
+  val firstUsersName = firstUsers.data.users.map(_.screen_name)
+
+  val secondUserList = restClient.listMembersBySlugAndOwnerName("Players", "MLB", count = 450)
+
+  val secondUsers = Await.result(secondUserList, Duration(1000, "seconds"))
+
+  val secondUsersName = secondUsers.data.users.map(_.screen_name)
 
   val file = new File("/home/stefano/Documents/bot.txt")
   val fileUser = new File("/home/stefano/Documents/user.txt")
@@ -46,8 +52,11 @@ object populateDb extends App{
   }
   bw.close()
 
-  usersName.foreach{
-    c => user.write(c + "\n")
+  firstUsersName.zip(secondUsersName).foreach{
+    f => {
+      user.write(f._1 + "\n")
+      user.write(f._2 + "\n")
+    }
   }
   user.close()
 }
