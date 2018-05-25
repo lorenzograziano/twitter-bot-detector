@@ -127,15 +127,15 @@ object ModelTraining {
 
     val xT: Array[Array[Double]] = x.transpose
 
-    val xAvg: Seq[Double] = xT.map{
+    val xAvg: Array[Double] = xT.map{
 
       feature =>
 
         feature.foldLeft((0.0, 1)) { case ((avg, idx), next) => (avg + (next - avg)/idx, idx + 1) }._1
 
-    }.toArray
+    }
 
-    val xStdDev: Seq[Double] = xT.zip(xAvg).map{
+    val xStdDev: Array[Double] = xT.zip(xAvg).map{
 
       case (feature, mean) =>
 
@@ -143,13 +143,17 @@ object ModelTraining {
 
         sqrMeanError.foldLeft((0.0, 1)) { case ((avg, idx), next) => (avg + (next - avg)/idx, idx + 1) }._1
 
-    }.toArray
+    }.map{
+
+      z => math.sqrt(z)
+
+    }
 
     val normX: Array[Array[Double]] = x.map(
       y =>
         y.zip(0.0 +: xAvg.tail).zip(1.0 +: xStdDev.tail).map(
           z =>
-            (z._1._1 - z._1._2) / (z._2)
+            (z._1._1 - z._1._2) / z._2
         )
     )
 
