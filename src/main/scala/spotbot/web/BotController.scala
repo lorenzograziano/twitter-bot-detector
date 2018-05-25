@@ -70,6 +70,7 @@ class BotController @Autowired()(private val botRepository: BotRepository) {
       val result = ModelTraining.train(botRepository)
       model.addAttribute("precision", result._1)
       model.addAttribute("recall", result._2)
+      model.addAttribute("accuracy", result._3)
 
     "/bots/resultOfTrain"
     }

@@ -28,13 +28,13 @@ object populateDb extends App{
 
   val botsName = bots.data.users.map(_.screen_name)
 
-  val firstUserList = restClient.listMembersBySlugAndOwnerName("verified accounts", "verified", count = 450)
+  val firstUserList = restClient.listMembersBySlugAndOwnerName("tech", "davidebradford", count = 450)
 
   val firstUsers = Await.result(firstUserList, Duration(1000, "seconds"))
 
   val firstUsersName = firstUsers.data.users.map(_.screen_name)
 
-  val secondUserList = restClient.listMembersBySlugAndOwnerName("Players", "MLB", count = 450)
+  val secondUserList = restClient.listMembersBySlugAndOwnerName("women-to-be-thankful-for", "katiehawk", count = 450)
 
   val secondUsers = Await.result(secondUserList, Duration(1000, "seconds"))
 
@@ -59,4 +59,6 @@ object populateDb extends App{
     }
   }
   user.close()
+
+  System.exit(0)
 }
