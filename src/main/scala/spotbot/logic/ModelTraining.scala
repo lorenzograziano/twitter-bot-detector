@@ -51,7 +51,7 @@ object ModelTraining {
       * Logistic Regression Model
       **/
     val optimizer =
-      new LogisticRegressionOptimizer(normX, y, LogisticRegression.theta, lambda = 0.01, numIter = 10000, alpha = 0.1)
+      new LogisticRegressionOptimizer(normX, y, LogisticRegression.theta, lambda = 0.01, numIter = 10000, alpha = 5)
 
     optimizer.optimize()
 
@@ -88,7 +88,7 @@ object ModelTraining {
 
     val accuracy = result.count {
       case(yP: Double, yT: Double) => yP == yT
-    }.toDouble/result.length
+    }.toDouble/result.length.toDouble
 
     System.out.println("Precision " + precision)
     System.out.println("Recall "+ recall)
