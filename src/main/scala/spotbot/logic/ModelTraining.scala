@@ -9,6 +9,10 @@ import scala.util.Random
 
 object ModelTraining {
 
+  var xAvg: Array[Double] = _
+
+  var xStdDev: Array[Double] = _
+
   def train(botRepository: BotRepository): (Double, Double, Double) = {
     /**
       * Retrieve data from DB
@@ -22,18 +26,27 @@ object ModelTraining {
       allTwitterAccountList = allTwitterAccountList :+ accountIterator.next()
     }
 
-    val botList = allTwitterAccountList
+    val botList: immutable.Seq[TwitterAccount] = allTwitterAccountList
       .filter(account => account.isBot)
     val splitBot = (botList.length * 0.75).round.toInt
-    val (trainingSetBot, validationSetBot) = botList.splitAt(splitBot)
 
-    val userList = allTwitterAccountList
+    val userList: immutable.Seq[TwitterAccount] = allTwitterAccountList
       .filter(account => !account.isBot)
     val splitUser = (userList.length * 0.75).round.toInt
 
-    val (trainingSetUser, validationSetUser) = userList.splitAt(splitUser)
-    val trainingSetList = trainingSetBot ++ trainingSetUser
-    val validationSet = validationSetBot ++ validationSetUser
+    val data = getXY(botList ++ userList)
+
+    calculateMeanAndStDev(data.map(_._1))
+
+    val normDataUser = normalize(data.filter(_._2 == 0.0).map(_._1))
+    val normDataBot = normalize(data.filter(_._2 == 1.0).map(_._1))
+
+    val (trainingSetUser, validationSetUser) = normDataUser.splitAt(splitUser)
+    val (trainingSetBot, validationSetBot) = normDataBot.splitAt(splitBot)
+    val trainingSetX = trainingSetBot ++ trainingSetUser
+    val trainingSetY = trainingSetBot.map( x => 0.0) ++ trainingSetUser.map( x => 1.0)
+    val validationSetX = validationSetBot ++ validationSetUser
+    val validationSetY = validationSetBot.map( x => 0.0) ++ validationSetUser.map( x => 1.0)
 
     System.out.println(s"userList ${userList.size}")
     System.out.println(s"traningSetUser ${trainingSetUser.size}")
@@ -42,31 +55,23 @@ object ModelTraining {
     System.out.println(s"trainingSetBot ${trainingSetBot.size}")
     System.out.println(s"validationSetBot ${validationSetBot.size}")
 
-    val x: Array[Array[Double]] = getX(trainingSetList)
-    val normX = normalize(x)
-
-    val y = getY(trainingSetList)
-
     /**
       * Logistic Regression Model
       **/
     val optimizer =
-      new LogisticRegressionOptimizer(normX, y, LogisticRegression.theta, lambda = 0.01, numIter = 10000, alpha = 5)
+      new LogisticRegressionOptimizer(trainingSetX, trainingSetY, LogisticRegression.theta, lambda = 0.1, numIter = 10000, alpha = 0.1)
 
     optimizer.optimize()
 
     /**
       * Validation
       * */
-    val xTest = getX(validationSet)
-    val xTestNorm = normalize(xTest)
-    val yTest: Array[Double] = getY(validationSet)
 
-    val yPred: Array[Double] = xTestNorm.map(
+    val yPred: Array[Double] = validationSetX.map(
       x => LogisticRegression.hTheta(x)
     )
 
-    val result = yPred.zip(yTest)
+    val result = yPred.zip(validationSetY)
 
     val truePositive = result
       .count{
@@ -98,10 +103,10 @@ object ModelTraining {
 
   }
 
-  def getX(list: List[TwitterAccount]): Array[Array[Double]] =
+  def getXY(list: Seq[TwitterAccount]): (Array[(Array[Double], Double)]) =
     list.map(
       twitterAccount =>
-        Array(
+        (Array(
           1.0,
           twitterAccount.getNumTweets.toDouble,
           twitterAccount.getAverageNumActivityPerDay,
@@ -109,41 +114,40 @@ object ModelTraining {
           twitterAccount.getFollowingAccounts.toDouble,
           twitterAccount.getFollowersCount.toDouble,
           twitterAccount.getPublicList.toDouble,
-          twitterAccount.getPercentageOfCompletion
+          twitterAccount.getPercentageOfCompletion),
+          if (twitterAccount.getIsBot) 1.0 else 0.0
         )
     ).toArray
 
-  def getY(list:List[TwitterAccount]):Array[Double] =
-    list.map(
-      twitterAccount =>
-        if (twitterAccount.getIsBot) 1.0 else 0.0
-    ).toArray
-
-  def normalize(x: Array[Array[Double]]): Array[Array[Double]] = {
+  def calculateMeanAndStDev(x: Array[Array[Double]]) = {
 
     val xT: Array[Array[Double]] = x.transpose
 
-    val xAvg: Array[Double] = xT.map{
+    xAvg = xT.map {
 
       feature =>
 
-        feature.foldLeft((0.0, 1)) { case ((avg, idx), next) => (avg + (next - avg)/idx, idx + 1) }._1
+        feature.foldLeft((0.0, 1)) { case ((avg, idx), next) => (avg + (next - avg) / idx, idx + 1) }._1
 
     }
 
-    val xStdDev: Array[Double] = xT.zip(xAvg).map{
+    xStdDev = xT.zip(xAvg).map {
 
       case (feature, mean) =>
 
-        val sqrMeanError = feature.map( x => (x - mean)*(x - mean) )
+        val sqrMeanError = feature.map(x => (x - mean) * (x - mean))
 
-        sqrMeanError.foldLeft((0.0, 1)) { case ((avg, idx), next) => (avg + (next - avg)/idx, idx + 1) }._1
+        sqrMeanError.foldLeft((0.0, 1)) { case ((avg, idx), next) => (avg + (next - avg) / idx, idx + 1) }._1
 
-    }.map{
+    }.map {
 
       z => math.sqrt(z)
 
     }
+
+  }
+
+  def normalize(x: Array[Array[Double]]): Array[Array[Double]] = {
 
     val normX: Array[Array[Double]] = x.map(
       y =>
