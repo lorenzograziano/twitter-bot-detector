@@ -22,19 +22,19 @@ object populateDb extends App{
   //  ("Self-care bots ", "clairesayswhat"),
   //  ("Chatbots on Twitter ", "SamSchmir"))
 
-  val botList = restClient.listMembersBySlugAndOwnerName("omnibots", "botALLY", count = 250)
+  val botList = restClient.listMembersBySlugAndOwnerName("omnibots", "botALLY", count = 400)
 
   val bots: RatedData[Users] = Await.result(botList, Duration(1000, "seconds"))
 
   val botsName = bots.data.users.map(_.screen_name)
 
-  val firstUserList = restClient.listMembersBySlugAndOwnerName("tech", "davidebradford", count = 450)
+  val firstUserList = restClient.listMembersBySlugAndOwnerName("tech", "davidebradford", count = 600)
 
   val firstUsers = Await.result(firstUserList, Duration(1000, "seconds"))
 
   val firstUsersName = firstUsers.data.users.map(_.screen_name)
 
-  val secondUserList = restClient.listMembersBySlugAndOwnerName("women-to-be-thankful-for", "katiehawk", count = 450)
+  val secondUserList = restClient.listMembersBySlugAndOwnerName("women-to-be-thankful-for", "katiehawk", count = 600)
 
   val secondUsers = Await.result(secondUserList, Duration(1000, "seconds"))
 
