@@ -9,7 +9,7 @@ import scala.util.Random
 
 object ModelTraining {
 
-  def train(botRepository: BotRepository): (Double, Double) = {
+  def train(botRepository: BotRepository): (Double, Double, Double) = {
     /**
       * Retrieve data from DB
       **/
@@ -66,17 +66,19 @@ object ModelTraining {
       x => LogisticRegression.hTheta(x)
     )
 
-    val truePositive = yPred.zip(yTest)
+    val result = yPred.zip(yTest)
+
+    val truePositive = result
       .count{
         case(yP: Double, yT: Double) => yP == yT && yP == 1
       }
 
-    val falsePositive = yPred.zip(yTest)
+    val falsePositive = result
       .count {
         case(yP: Double, yT: Double) => yP == 1 && yP != yT
       }
 
-    val falseNegative = yPred.zip(yTest)
+    val falseNegative = result
       .count {
         case(yP: Double, yT: Double) => yP == 0 && yP != yT
       }
@@ -84,21 +86,15 @@ object ModelTraining {
     val precision = truePositive.toDouble / (truePositive + falsePositive)
     val recall = truePositive.toDouble / (truePositive + falseNegative)
 
-    System.out.println("positive " + yTest.count(x=>x==1))
-    System.out.println("negative " + yTest.count(x=>x==0))
-
-    System.out.println("truePositive " + truePositive)
-    System.out.println("falsePositive "+ falsePositive)
-    System.out.println("falseNegative "+ falseNegative)
+    val accuracy = result.count {
+      case(yP: Double, yT: Double) => yP == yT
+    }.toDouble/result.length
 
     System.out.println("Precision " + precision)
     System.out.println("Recall "+ recall)
+    System.out.println("Accuracy "+ accuracy)
 
-
-
-
-
-    (precision, recall)
+    (precision, recall, accuracy)
 
   }
 

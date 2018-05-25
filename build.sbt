@@ -22,10 +22,8 @@ lazy val root = (project in file(".")).
     libraryDependencies += "org.thymeleaf" % "thymeleaf-spring4" % thymeleafVersion,
     libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.37",
     libraryDependencies += "nz.net.ultraq.thymeleaf" % "thymeleaf-layout-dialect" % "1.4.0",
-    //libraryDependencies += "com.h2database" % "h2" % "1.4.195",
     libraryDependencies += "org.webjars" % "bootstrap" % "3.1.1",
-    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.5",
-    libraryDependencies += "org.scalaj" % "scalaj-http_2.11" % "2.3.0"
+    libraryDependencies += "com.danielasfregola" %% "twitter4s" % "5.5"
   )
 
 
