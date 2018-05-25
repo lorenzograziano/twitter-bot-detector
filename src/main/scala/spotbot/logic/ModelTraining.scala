@@ -59,7 +59,7 @@ object ModelTraining {
       * Logistic Regression Model
       **/
     val optimizer =
-      new LogisticRegressionOptimizer(trainingSetX, trainingSetY, LogisticRegression.theta, lambda = 0.1, numIter = 10000, alpha = 0.1)
+      new LogisticRegressionOptimizer(trainingSetX, trainingSetY, LogisticRegression.theta, lambda = 0.1, numIter = 10000, alpha = 1)
 
     optimizer.optimize()
 
@@ -69,7 +69,7 @@ object ModelTraining {
 
     val yPred: Array[Double] = validationSetX.map(
       x => LogisticRegression.hTheta(x)
-    )
+    ).map( x => if (x > 0.75) 1.0 else 0.0)
 
     val result = yPred.zip(validationSetY)
 
