@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/sitelayout">
+<head>
+    <title th:text="#{app.name}">List of Hotels</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap-theme.css}" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.css" />
+    <link rel="stylesheet" th:href="@{/css/application.css}" href="../../static/css/application.css" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="well well-small">Bots</h1>
+        </div>
+    </div>
+    <div layout:fragment="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <form action="#" th:action="@{/bots/createList}" method="POST" th:object="${listUser}" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="ownerList" class="col-xs-2">ownerList</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" placeholder="ownerList" th:field="*{ownerList}"/>
+                        </div>
+                        <div class="col-xs-4">
+                            <p class="text-warning" th:if="${#fields.hasErrors('ownerList')}" th:errors="*{ownerList}">Error with ownerList</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="slug" class="col-xs-2">slug</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" placeholder="slug" th:field="*{slug}"/>
+                        </div>
+                        <div class="col-xs-4">
+                            <p class="text-warning" th:if="${#fields.hasErrors('slug')}" th:errors="*{slug}">Error with slug</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="isBotList" class="col-xs-2">isBotList</label>
+                        <div class="col-xs-6">
+                            <input class="form-control" placeholder="isBotList" th:field="*{isBotList}"/>
+                        </div>
+                        <div class="col-xs-4">
+                            <p class="text-warning" th:if="${#fields.hasErrors('isBotList')}" th:errors="*{isBotList}">Error with isBotList</p>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

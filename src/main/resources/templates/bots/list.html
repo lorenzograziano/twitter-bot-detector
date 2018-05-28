@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/sitelayout">
+<head>
+<title th:text="#{app.name}">List of Bots</title>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap-theme.css}" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.css" />
+<link rel="stylesheet" th:href="@{/css/application.css}" href="../../static/css/application.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<h1 class="well well-small">Bots</h1>
+			</div>
+		</div>
+		<div layout:fragment="content">
+			<div class="row">
+				<div class="col-xs-12">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>Twitter Name</th>
+								<th>Spotter</th>
+								<th>Spotted on </th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${bots.empty}">
+								<td colspan="5">No messages</td>
+							</tr>
+							<tr th:each="bot : ${bots}">
+								<tr th:if="${bot.isBot}">
+									<td th:text="${bot.id}">1</td>
+									<td th:text="${bot.twitterName}">Test Name 1</td>
+									<td th:text="${bot.idMarker}">Test Address 1</td>
+									<td th:text="${bot.markingDate}">Test Zip 1</td>
+									<td><a th:href="@{/bots/edit/__${bot.id}__}" href="#">Edit</a>
+										| <a th:href="@{/bots/delete/__${bot.id}__}" href="#">Delete</a>
+									</td>
+								</tr>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<a href="#" th:href="@{/bots?form=true}" class="btn btn-default">Report new Bot</a>
+					<a href="#" th:href="@{/botRequest?askForm=true}" class="btn btn-default">It is a Bot?</a>
+					<a href="#" th:href="@{/bots/train}" class="btn btn-default">Train the model</a>
+					<a href="#" th:href="@{/bots?formListUser=true}" class="btn btn-default">Import twitter list</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
