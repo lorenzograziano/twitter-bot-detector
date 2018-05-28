@@ -1,7 +1,7 @@
 pipeline {
   agent {
-    node {
-      label 'node1'
+    docker {
+      image 'hseeberger/scala-sbt:latest'
     }
 
   }
@@ -11,8 +11,5 @@ pipeline {
         sh 'sbt'
       }
     }
-  }
-  environment {
-    node1 = 'hseeberger/scala-sbt'
   }
 }
