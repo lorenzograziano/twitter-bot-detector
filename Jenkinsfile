@@ -12,6 +12,7 @@ pipeline {
       steps {
         sh 'sbt compile'
       }
+    }
       post {
             success {
                 echo "SUCCESS"
@@ -35,7 +36,6 @@ pipeline {
       }
     }
 
-  }
 }
 
 
