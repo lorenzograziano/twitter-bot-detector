@@ -28,6 +28,7 @@ pipeline {
      stage('test3') {
         steps {
             script {
+        echo "Hello, ${CONTINUE}, nice to meet you."
                 if ( ${CONTINUE} == 'master') {
                         echo 'I only execute on the master branch'
                 } else {
