@@ -15,40 +15,43 @@ pipeline {
       post {
           success {
             echo 'SUCCESS!'
-            input {
-                          message "coverage test not passed, do you want to continue anyway?"
-                          ok "Yes"
-                          parameters {
-                              string(name: 'CONTINUE', defaultValue: 'No')
-                          }
-                      }
-                      steps {
-                          echo "Hello, ${CONTINUE}, nice to meet you."
-                      }
+            /*input {
+                message "coverage test not passed, do you want to continue anyway?"
+                ok "Yes"
+                parameters {
+                    string(name: 'CONTINUE', defaultValue: 'No')
+                }
+            }
+            steps {
+                echo "Hello, ${CONTINUE}, nice to meet you."
+            }
+            */
           }
           failure {
             echo 'Failure!'
+            /*
             input {
-                          message "coverage test not passed, do you want to continue anyway?"
-                          ok "Yes"
-                          parameters {
-                              string(name: 'CONTINUE', defaultValue: 'No')
-                          }
-                      }
-                      steps {
-                          echo "Hello, ${CONTINUE}, nice to meet you."
-                      }
+                message "coverage test not passed, do you want to continue anyway?"
+                ok "Yes"
+                parameters {
+                    string(name: 'CONTINUE', defaultValue: 'No')
+                }
+            }
+            steps {
+                echo "Hello, ${CONTINUE}, nice to meet you."
+            }
+            */
           }
           unstable {
-              input {
-                  message "coverage test not passed, do you want to continue anyway?"
-                  ok "Yes"
-                  parameters {
-                      string(name: 'CONTINUE', defaultValue: 'No')
-                  }
-              }
-              steps {
-                  echo "Hello, ${CONTINUE}, nice to meet you."
+            input {
+                message "coverage test not passed, do you want to continue anyway?"
+                ok "Yes"
+                parameters {
+                    string(name: 'CONTINUE', defaultValue: 'No')
+                }
+            }
+            steps {
+                echo "Hello, ${CONTINUE}, nice to meet you."
               }
           }
     }
