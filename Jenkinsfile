@@ -26,14 +26,12 @@ pipeline {
       }
       steps {
         echo "Continue execution: ${CONTINUE}"
-        sh 'if [ $USER == \'bob\' ] || [ $USER == \'andy\' ]; then ls -alh; else ls; fi'
-        script{
-           if (${CONTINUE} == 'false') {
-              echo 'I only execute on the master branch'
-              exit 1
-           } else { echo 'I execute elsewhere'}
+        if (${CONTINUE} == 'false') {
+           echo 'I only execute on the master branch'
+           exit 1
         }
-        echo "Continue execution: ${CONTINUE_EXECUTION}"
+      }
+      echo "Continue execution: ${CONTINUE_EXECUTION}"
 
       }
     }
