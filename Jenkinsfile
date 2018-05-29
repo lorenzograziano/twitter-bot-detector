@@ -29,9 +29,16 @@ pipeline {
      }
     //launch coverage test
       steps {
+
          sh 'ls'
          echo "currentBuild status: ${currentBuild.result}"
          script{
+
+               if (binding.variables.containsKey('CONTINUE_EXECUTION')) {
+                   echo "la libreria funziona"
+               }
+
+
             env.CONTINUE_EXECUTION = "FUNZIONA"
             echo env.CONTINUE_EXECUTION
          }
