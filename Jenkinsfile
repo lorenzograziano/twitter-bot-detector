@@ -32,7 +32,7 @@ pipeline {
         script {
           echo "Continue execution: ${CONTINUE}"
           echo "${env.CONTINUE}"
-          if ('${CONTINUE}' == 'false') {
+          if (env.CONTINUE == 'false') {
              echo 'I only execute on the master branch'
              exit 1
           } else {
