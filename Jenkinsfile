@@ -29,7 +29,7 @@ pipeline {
      }
     //launch coverage test
       steps {
-         'sbt compile'
+         sh 'sbt compile'
          echo "currentBuild status: ${currentBuild.result}"
       }
     }
