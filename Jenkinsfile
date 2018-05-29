@@ -15,6 +15,15 @@ pipeline {
       post {
           success {
             echo 'SUCCESS!'
+            ESITO='SUCCESS!'
+
+          }
+          failure {
+            echo 'Failure!'
+            ESITO='Failure!'
+
+          }
+          unstable {
             /*input {
                 message "coverage test not passed, do you want to continue anyway?"
                 ok "Yes"
@@ -24,37 +33,16 @@ pipeline {
             }
             steps {
                 echo "Hello, ${CONTINUE}, nice to meet you."
-            }
-            */
-          }
-          failure {
-            echo 'Failure!'
-            /*
-            input {
-                message "coverage test not passed, do you want to continue anyway?"
-                ok "Yes"
-                parameters {
-                    string(name: 'CONTINUE', defaultValue: 'No')
-                }
-            }
-            steps {
-                echo "Hello, ${CONTINUE}, nice to meet you."
-            }
-            */
-          }
-          unstable {
-            input {
-                message "coverage test not passed, do you want to continue anyway?"
-                ok "Yes"
-                parameters {
-                    string(name: 'CONTINUE', defaultValue: 'No')
-                }
-            }
-            steps {
-                echo "Hello, ${CONTINUE}, nice to meet you."
-              }
+              }*/
+              ESITO='UNSTABLE!'
+
           }
     }
+    stage('postBuild') {
+          agent none
+          steps {
+            echo ${ESITO}
+          }
     }
     /*
         stage('test') {
