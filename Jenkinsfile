@@ -31,12 +31,12 @@ pipeline {
       steps {
         script {
           echo "Continue execution: ${CONTINUE}"
-          echo "${env.CONTINUE}"
+
           if (env.CONTINUE == 'false') {
-             echo 'I only execute on the master branch'
+             echo 'Exit from jenkins pipeline'
              exit 1
           } else {
-            echo 'else'
+            echo 'Continue jenkins pipeline execution'
           }
         }
       }
@@ -46,9 +46,9 @@ pipeline {
       steps {
         script {
           if (env.BRANCH_NAME == 'master') {
-            echo 'I only execute on the master branch'
+            echo 'You are on master branch'
           } else {
-            echo 'I execute elsewhere'
+            echo 'you are on ${env.BRANCH_NAME} branch'
           }
         }
       }
