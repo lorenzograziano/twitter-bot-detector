@@ -1,7 +1,5 @@
 pipeline {
-   environment {
-     ESITO = "foo"
-   }
+
 
   agent none
   stages {
@@ -18,10 +16,10 @@ pipeline {
       }
       post {
           success {
-            steps {
-                echo 'SUCCESS!'
-                ESITO="SUCCESS!"
-            }
+          environment {
+               ESITO = "SUCCESS"
+             }
+
 
           }
           failure {
