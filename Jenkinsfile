@@ -26,12 +26,14 @@ pipeline {
       }
       steps {
         echo "Continue execution: ${CONTINUE}"
-        CONTINUE_EXECUTION = ${CONTINUE}
       }
+      environment {
+                CONTINUE_EXECUTION = 'true'
+            }
     }
      stage('test3') {
         steps {
-                echo "Hello, ${DISABLE_AUTH}, nice to meet you."
+                echo "Hello, ${CONTINUE_EXECUTION}, nice to meet you."
 
             script {
                 if (env.BRANCH_NAME == 'master') {
