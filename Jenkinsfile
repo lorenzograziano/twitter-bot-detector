@@ -4,13 +4,13 @@ pipeline {
     stage('build') {
       agent {
         docker {
-          image 'hseeberger/scala-sbt:latest'
+          image 'hseeberger/scala-sbt'
           args '-v docker-sbt-home:/docker-java-home'
         }
 
       }
       steps {
-        sh 'sbt compile'
+        sh 'ls'//'sbt compile'
       }
     }
     stage('postBuild') {
@@ -25,5 +25,16 @@ pipeline {
         echo "Hello, ${CONTINUE}, nice to meet you."
       }
     }
+     stage('test3') {
+        steps {
+            script {
+                if (env.BRANCH_NAME == 'master') {
+                        echo 'I only execute on the master branch'
+                } else {
+                        echo 'I execute elsewhere'
+                }
+            }
+        }
+     }
   }
 }
