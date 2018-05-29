@@ -1,4 +1,8 @@
 pipeline {
+   environment {
+     ESITO = "foo"
+   }
+
   agent none
   stages {
 
@@ -15,12 +19,12 @@ pipeline {
       post {
           success {
             echo 'SUCCESS!'
-            def ESITO='SUCCESS!'
+            ESITO="SUCCESS!"
 
           }
           failure {
             echo 'Failure!'
-            def ESITO='Failure!'
+            ESITO="Failure!"
 
           }
           unstable {
@@ -34,14 +38,14 @@ pipeline {
             steps {
                 echo "Hello, ${CONTINUE}, nice to meet you."
               }*/
-              def ESITO='UNSTABLE!'
+              ESITO="UNSTABLE!"
 
           }
     }
     stage('postBuild') {
           agent none
           steps {
-            echo ${ESITO}
+            sh "echo ${ESITO}"
           }
     }
     /*
