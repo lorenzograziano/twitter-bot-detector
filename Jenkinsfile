@@ -38,7 +38,6 @@ pipeline {
     }
      stage('test3') {
         steps {
-                echo "Hello, ${CONTINUE_EXECUTION}, nice to meet you."
 
             script {
                 if (env.BRANCH_NAME == 'master') {
