@@ -31,6 +31,8 @@ pipeline {
       steps {
         script {
           echo "Continue execution: ${CONTINUE}"
+          test=${CONTINUE}
+          echo "${test}"
           if ('false' == 'false') {
              echo 'I only execute on the master branch'
              exit 1
