@@ -15,12 +15,12 @@ pipeline {
       post {
           success {
             echo 'SUCCESS!'
-            ESITO='SUCCESS!'
+            def ESITO='SUCCESS!'
 
           }
           failure {
             echo 'Failure!'
-            ESITO='Failure!'
+            def ESITO='Failure!'
 
           }
           unstable {
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 echo "Hello, ${CONTINUE}, nice to meet you."
               }*/
-              ESITO='UNSTABLE!'
+              def ESITO='UNSTABLE!'
 
           }
     }
