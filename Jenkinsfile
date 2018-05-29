@@ -37,6 +37,6 @@ pipeline {
       unstable {
         echo 'Unstable!'
       }
+  }
 }
-
 
