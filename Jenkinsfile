@@ -21,9 +21,15 @@ pipeline {
     }
 
     stage('codeCoverage') {
+     agent {
+            docker {
+              image 'hseeberger/scala-sbt'
+              args '-v docker-sbt-home:/docker-java-home'
+            }
+          }
     //launch coverage test
       steps {
-         echo 'LOL'
+         sbt compile'
          echo "currentBuild status: ${currentBuild.result}"
       }
     }
