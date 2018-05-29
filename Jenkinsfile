@@ -30,7 +30,7 @@ pipeline {
            echo 'I only execute on the master branch'
            exit 1
         }
-      }
+
       echo "Continue execution: ${CONTINUE_EXECUTION}"
 
       }
@@ -48,5 +48,5 @@ pipeline {
             }
         }
      }
-
+ }
 }
