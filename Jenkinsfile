@@ -1,8 +1,7 @@
 pipeline {
   agent none
       environment {
-          DISABLE_AUTH = 'true'
-          DB_ENGINE    = 'sqlite'
+          CONTINUE_EXECUTION = 'true'
       }
   stages {
     stage('build') {
@@ -22,11 +21,12 @@ pipeline {
         message 'coverage test not passed, do you want to continue anyway?'
         id 'Yes'
         parameters {
-          string(name: 'CONTINUE', defaultValue: 'No')
+          string(name: 'CONTINUE', defaultValue: 'false')
         }
       }
       steps {
-        echo "Hello, ${CONTINUE}, nice to meet you."
+        echo "Continue execution: ${CONTINUE}"
+        CONTINUE_EXECUTION = ${CONTINUE}
       }
     }
      stage('test3') {
