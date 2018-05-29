@@ -31,7 +31,7 @@ pipeline {
            if (${CONTINUE} == 'false') {
               echo 'I only execute on the master branch'
               exit 1
-           }
+           } else { echo 'I execute elsewhere'}
         }
       }
     }
