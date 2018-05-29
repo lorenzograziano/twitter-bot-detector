@@ -30,7 +30,7 @@ pipeline {
         if (${CONTINUE} == 'false') {
            echo 'I only execute on the master branch'
            exit 1
-        }
+        } else {echo 'else'}
 
       echo "Continue execution: ${CONTINUE_EXECUTION}"
 }
