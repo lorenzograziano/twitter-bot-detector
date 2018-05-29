@@ -32,7 +32,10 @@ pipeline {
          sh 'ls'
          echo "currentBuild status: ${currentBuild.result}"
          script{
-            env.CONTINUE_EXECUTION="FUNZIONA"
+            def agentInfo = sh script:'uname -a', returnStdout: true
+            println "Agent info within script: ${agentInfo}"
+            AGENT_INFO = agentInfo.replace("/n","")
+            env.CONTINUE_EXECUTION= AGENT_INFO
          }
       }
 
