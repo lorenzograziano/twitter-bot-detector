@@ -1,19 +1,6 @@
 pipeline {
   agent none
   stages {
-    stage('Example') {
-        input {
-            message "Should we continue?"
-            ok "Yes, we should."
-            submitter "alice,bob"
-            parameters {
-                string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-            }
-        }
-        steps {
-            echo "Hello, ${PERSON}, nice to meet you."
-        }
-    }
 
     stage('build') {
       agent {
@@ -30,13 +17,53 @@ pipeline {
   post {
       success {
         echo 'SUCCESS!'
+        input {
+                      message "coverage test not passed, do you want to continue anyway?"
+                      ok "Yes"
+                      parameters {
+                          string(name: 'CONTINUE', defaultValue: 'No')
+                      }
+                  }
+                  steps {
+                      echo "Hello, ${CONTINUE}, nice to meet you."
+                  }
       }
       failure {
         echo 'Failure!'
+        input {
+                      message "coverage test not passed, do you want to continue anyway?"
+                      ok "Yes"
+                      parameters {
+                          string(name: 'CONTINUE', defaultValue: 'No')
+                      }
+                  }
+                  steps {
+                      echo "Hello, ${CONTINUE}, nice to meet you."
+                  }
       }
       unstable {
-        echo 'Unstable!'
+          input {
+              message "coverage test not passed, do you want to continue anyway?"
+              ok "Yes"
+              parameters {
+                  string(name: 'CONTINUE', defaultValue: 'No')
+              }
+          }
+          steps {
+              echo "Hello, ${CONTINUE}, nice to meet you."
+          }
       }
+
+  }
+  stages {
+      stage('test') {
+            if (${CONTINUE} == 'Yes') {
+                    echo 'I only execute on the master branch'
+            } else {
+                    echo 'I execute elsewhere'
+            }
+    }
   }
 }
+
 
