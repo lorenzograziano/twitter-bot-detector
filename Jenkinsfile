@@ -23,11 +23,9 @@ pipeline {
     stage('codeCoverage') {
     //launch coverage test
       steps {
-         script {
-           echo "currentBuild status: ${currentBuild.result}"
-         }
+         echo 'LOL'
+         echo "currentBuild status: ${currentBuild.result}"
       }
-
       input {
         message 'coverage test not passed, do you want to continue anyway?'
         id 'Yes'
