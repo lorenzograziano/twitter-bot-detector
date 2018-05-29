@@ -18,8 +18,10 @@ pipeline {
       }
       post {
           success {
-            echo 'SUCCESS!'
-            ESITO="SUCCESS!"
+            step{
+                echo 'SUCCESS!'
+                ESITO="SUCCESS!"
+            }
 
           }
           failure {
