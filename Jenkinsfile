@@ -33,7 +33,7 @@ pipeline {
          sh 'ls'
          echo "currentBuild status: ${currentBuild.result}"
          script{
-
+                echo binding.variables
                if (binding.variables.containsKey('CONTINUE_EXECUTION')) {
                    echo "la libreria funziona"
                }
