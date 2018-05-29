@@ -12,7 +12,6 @@ pipeline {
       steps {
         sh 'sbt compile'
       }
-    }
       post {
           success {
             echo 'SUCCESS!'
@@ -52,8 +51,8 @@ pipeline {
                   echo "Hello, ${CONTINUE}, nice to meet you."
               }
           }
-
-      }
+    }
+    }
 
     stage('test') {
             if (${CONTINUE} == 'Yes') {
