@@ -51,6 +51,7 @@ pipeline {
       steps {
         script {
                      echo "Continue execution: ${env.CONTINUE_EXECUTION}"
+                     echo "Continue execution: ${CONTINUE_EXECUTION}"
 
           echo "Continue execution: ${CONTINUE}"
 
