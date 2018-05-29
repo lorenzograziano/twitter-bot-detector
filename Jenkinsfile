@@ -13,12 +13,7 @@ pipeline {
         sh 'sbt compile'
       }
     }
-      post {
-            success {
-                echo "SUCCESS"
 
-            }
-      }
 
 
       stage('postBuild') {
