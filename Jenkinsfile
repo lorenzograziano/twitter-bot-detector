@@ -25,8 +25,8 @@ pipeline {
         }
       }
       steps {
-        echo "Continue execution: ${CONTINUE}
-                echo "Continue execution: ${CONTINUE_EXECUTION}"
+        echo "Continue execution: ${CONTINUE}"
+        echo "Continue execution: ${CONTINUE_EXECUTION}"
 
       }
     }
