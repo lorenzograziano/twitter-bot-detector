@@ -33,7 +33,7 @@ pipeline {
          echo "currentBuild status: ${currentBuild.result}"
          script{
             env.CONTINUE_EXECUTION = "FUNZIONA"
-            echo ${env.CONTINUE_EXECUTION}
+            echo env.CONTINUE_EXECUTION
          }
       }
 
