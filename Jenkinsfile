@@ -32,30 +32,31 @@ pipeline {
          sh 'sbt compile'
          echo "currentBuild status: ${currentBuild.result}"
       }
-    }
-    post{
-        always{
-              input {
-                message 'coverage test not passed, do you want to continue anyway?'
-                id 'Yes'
-                parameters {
-                  string(name: 'CONTINUE', defaultValue: 'false')
-                }
-              }
-              steps {
-                script {
-                  echo "Continue execution: ${CONTINUE}"
+      post{
+              always{
+                    input {
+                      message 'coverage test not passed, do you want to continue anyway?'
+                      id 'Yes'
+                      parameters {
+                        string(name: 'CONTINUE', defaultValue: 'false')
+                      }
+                    }
+                    steps {
+                      script {
+                        echo "Continue execution: ${CONTINUE}"
 
-                  if (env.CONTINUE == 'false') {
-                     echo 'Exit from jenkins pipeline'
-                     exit 1
-                  } else {
-                    echo 'Continue jenkins pipeline execution'
-                  }
-                }
+                        if (env.CONTINUE == 'false') {
+                           echo 'Exit from jenkins pipeline'
+                           exit 1
+                        } else {
+                          echo 'Continue jenkins pipeline execution'
+                        }
+                      }
+                    }
               }
-        }
+          }
     }
+
 
     stage('postCodeCoverage') {
 
