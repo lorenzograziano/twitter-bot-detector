@@ -53,15 +53,15 @@ pipeline {
           }
     }
     }
-
-    stage('test') {
-            if ('Yes' == 'Yes') {
-                    echo 'I only execute on the master branch'
-            } else {
-                    echo 'I execute elsewhere'
-            }
+    node{
+        stage('test') {
+                if (${CONTINUE} == 'Yes') {
+                        echo 'I only execute on the master branch'
+                } else {
+                        echo 'I execute elsewhere'
+                }
+        }
     }
-
 
   }
 
