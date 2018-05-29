@@ -25,6 +25,7 @@ pipeline {
         }
       }
       steps {
+      script {
         echo "Continue execution: ${CONTINUE}"
         if (${CONTINUE} == 'false') {
            echo 'I only execute on the master branch'
@@ -32,7 +33,7 @@ pipeline {
         }
 
       echo "Continue execution: ${CONTINUE_EXECUTION}"
-
+}
       }
     }
      stage('test3') {
