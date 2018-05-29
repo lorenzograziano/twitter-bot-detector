@@ -29,32 +29,13 @@ pipeline {
      }
     //launch coverage test
       steps {
-         sh 'sbt compile'
+         sh 'ls'
          echo "currentBuild status: ${currentBuild.result}"
+         script{
+            env.CONTINUE_EXECUTION="FUNZIONA"
+         }
       }
-      post{
-              always{
-                    input {
-                      message 'coverage test not passed, do you want to continue anyway?'
-                      id 'Yes'
-                      parameters {
-                        string(name: 'CONTINUE', defaultValue: 'false')
-                      }
-                    }
-                    steps {
-                      script {
-                        echo "Continue execution: ${CONTINUE}"
 
-                        if (env.CONTINUE == 'false') {
-                           echo 'Exit from jenkins pipeline'
-                           exit 1
-                        } else {
-                          echo 'Continue jenkins pipeline execution'
-                        }
-                      }
-                    }
-              }
-          }
     }
 
 
@@ -69,6 +50,8 @@ pipeline {
       }
       steps {
         script {
+                     echo "Continue execution: ${env.CONTINUE_EXECUTION}"
+
           echo "Continue execution: ${CONTINUE}"
 
           if (env.CONTINUE == 'false') {
