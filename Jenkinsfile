@@ -20,7 +20,14 @@ pipeline {
       }
     }
 
-    stage('postBuild') {
+    stage('codeCoverage') {
+    //launch coverage test
+      steps {
+         script {
+           echo "currentBuild status: ${currentBuild.result}"
+         }
+      }
+
       input {
         message 'coverage test not passed, do you want to continue anyway?'
         id 'Yes'
@@ -48,7 +55,7 @@ pipeline {
           if (env.BRANCH_NAME == 'master') {
             echo 'You are on master branch'
           } else {
-            echo 'you are on ${env.BRANCH_NAME} branch'
+            echo 'you are on another branch'
           }
         }
       }
