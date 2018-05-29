@@ -32,8 +32,7 @@ pipeline {
            exit 1
         } else {echo 'else'}
 
-      echo "Continue execution: ${CONTINUE_EXECUTION}"
-}
+    }
       }
     }
      stage('test3') {
