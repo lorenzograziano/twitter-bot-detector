@@ -1,5 +1,9 @@
 pipeline {
   agent none
+      environment {
+          DISABLE_AUTH = 'true'
+          DB_ENGINE    = 'sqlite'
+      }
   stages {
     stage('build') {
       agent {
@@ -27,6 +31,8 @@ pipeline {
     }
      stage('test3') {
         steps {
+                echo "Hello, ${DISABLE_AUTH}, nice to meet you."
+
             script {
                 if (env.BRANCH_NAME == 'master') {
                         echo 'I only execute on the master branch'
