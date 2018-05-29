@@ -25,11 +25,10 @@ pipeline {
         }
       }
       steps {
-        echo "Continue execution: ${CONTINUE}"
+        echo "Continue execution: ${CONTINUE}
+                echo "Continue execution: ${CONTINUE_EXECUTION}"
+
       }
-      environment {
-                CONTINUE_EXECUTION = 'true'
-            }
     }
      stage('test3') {
         steps {
