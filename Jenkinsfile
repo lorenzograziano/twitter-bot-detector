@@ -26,6 +26,10 @@ pipeline {
          echo 'LOL'
          echo "currentBuild status: ${currentBuild.result}"
       }
+    }
+
+    stage('postCodeCoverage') {
+
       input {
         message 'coverage test not passed, do you want to continue anyway?'
         id 'Yes'
