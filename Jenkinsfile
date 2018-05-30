@@ -29,7 +29,7 @@ pipeline {
      }
     //launch coverage test
       steps {
-
+  script{
          echo "currentBuild status: ${currentBuild.result}"
          try {
             sh 'sbt clean coverage test coverageReport'
@@ -40,7 +40,7 @@ pipeline {
                           echo "currentBuild status: ${error}"
          }
 
-         script{
+
                 echo binding.variables
                if (binding.variables.containsKey('CONTINUE_EXECUTION')) {
                    echo "la libreria funziona"
