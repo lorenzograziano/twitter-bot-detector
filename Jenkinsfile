@@ -29,9 +29,19 @@ pipeline {
      }
     //launch coverage test
       steps {
+
          echo "currentBuild status: ${currentBuild.result}"
-         sh 'sbt clean coverage test coverageReport'
-         echo "currentBuild status: ${currentBuild.result}"
+         try {
+            sh 'sbt clean coverage test coverageReport'
+         }
+         catch (exc) {
+             echo 'Something failed, I should sound the klaxons!'
+             echo "currentBuild status: ${currentBuild.result}"
+                          echo "currentBuild status: ${error}"
+
+             throw
+         }
+
          script{
                 echo binding.variables
                if (binding.variables.containsKey('CONTINUE_EXECUTION')) {
