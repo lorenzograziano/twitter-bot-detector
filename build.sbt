@@ -30,3 +30,8 @@ lazy val root = (project in file(".")).
 // set the main class for the main 'run' task
 // change Compile to Test to set it for 'test:run'
 mainClass in (Compile, run) := Some("spotbot.Application")
+
+
+coverageEnabled := true
+coverageMinimum := 60
+coverageFailOnMinimum := true
