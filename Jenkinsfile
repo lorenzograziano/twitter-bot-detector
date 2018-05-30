@@ -38,8 +38,6 @@ pipeline {
              echo 'Something failed, I should sound the klaxons!'
              echo "currentBuild status: ${currentBuild.result}"
                           echo "currentBuild status: ${error}"
-
-             throw
          }
 
          script{
