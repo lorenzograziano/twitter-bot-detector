@@ -29,8 +29,8 @@ pipeline {
      }
     //launch coverage test
       steps {
-
-         sh 'ls'
+         echo "currentBuild status: ${currentBuild.result}"
+         sh 'sbt clean coverage test coverageReport'
          echo "currentBuild status: ${currentBuild.result}"
          script{
                 echo binding.variables
