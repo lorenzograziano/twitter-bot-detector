@@ -37,21 +37,13 @@ pipeline {
          catch (exc) {
              echo 'Something failed, I should sound the klaxons!'
              echo "currentBuild status: ${currentBuild.result}"
-                          echo "currentBuild status: ${error}"
-                          currentBuild.result = 'UNSTABLE'
-                                       echo "currentBuild status: ${currentBuild.result}"
-
+             echo "currentBuild status: ${error}"
+             currentBuild.result = 'UNSTABLE'
+             echo "currentBuild status: ${currentBuild.result}"
 
          }
 
-
-                echo binding.variables
-               if (binding.variables.containsKey('CONTINUE_EXECUTION')) {
-                   echo "la libreria funziona"
-               }
-
-
-            env.CONTINUE_EXECUTION = "FUNZIONA"
+            env.CONTINUE_EXECUTION "FUNZIONA?"
             echo env.CONTINUE_EXECUTION
          }
       }
