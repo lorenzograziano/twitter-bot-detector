@@ -1,13 +1,11 @@
 package spotbot.logic
 
 import spotbot.utils.FileSystemUtils
-import scala.util.Random
+
 
 object LogisticRegression {
 
   var lambda: Double = _
-
-  private val rnd = new Random()
 
   var theta: Array[Double] = FileSystemUtils.readThetaLRFromJson()
 
