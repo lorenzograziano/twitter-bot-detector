@@ -30,7 +30,7 @@ pipeline {
     //launch coverage test
       steps {
          script{
-                b = sh(cmd: 'sbt clean coverage test coverageReport', propagate: false).result
+                b = sh(cmd: 'sbt clean coverage test coverageReport', returnStatus: false).result
                 if(b == 'FAILURE'){
                     echo "COVERAGE TEST FAILED!"
                     currentBuild.result = 'UNSTABLE'
