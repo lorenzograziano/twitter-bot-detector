@@ -1,5 +1,6 @@
 package spotbot.logic
 
+import spotbot.utils.FileSystemUtils
 import scala.util.Random
 
 object LogisticRegression {
@@ -8,16 +9,7 @@ object LogisticRegression {
 
   private val rnd = new Random()
 
-  var theta = Array(
-    rnd.nextGaussian(),
-    rnd.nextGaussian(),
-    rnd.nextGaussian(),
-    rnd.nextGaussian(),
-    rnd.nextGaussian(),
-    rnd.nextGaussian(),
-    rnd.nextGaussian(),
-    rnd.nextGaussian()
-  )
+  var theta: Array[Double] = FileSystemUtils.readThetaLRFromJson()
 
   def sigmoid(z: Double): Double = 1.0 / (1.0 + math.exp(-z))
 
