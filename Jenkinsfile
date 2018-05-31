@@ -29,22 +29,22 @@ pipeline {
      }
     //launch coverage test
       steps {
-  script{
-         echo "currentBuild status: ${currentBuild.result}"
-         try {
-            sh 'sbt clean coverage test coverageReport'
-         }
-         catch (exc) {
-             echo 'Something failed, I should sound the klaxons!'
+         script{
              echo "currentBuild status: ${currentBuild.result}"
-             echo "currentBuild status: ${error}"
-             currentBuild.result = 'UNSTABLE'
-             echo "currentBuild status: ${currentBuild.result}"
+             try {
+                sh 'sbt clean coverage test coverageReport'
+             }
+             catch (exc) {
+                 echo 'Something failed, I should sound the klaxons!'
+                 echo "currentBuild status: ${currentBuild.result}"
+                 echo "currentBuild status: ${error}"
+                 currentBuild.result = 'UNSTABLE'
+                 echo "currentBuild status: ${currentBuild.result}"
 
-         }
+             }
 
-            env.CONTINUE_EXECUTION = "FUNZIONA?"
-            echo env.CONTINUE_EXECUTION
+             env.CONTINUE_EXECUTION = "FUNZIONA?"
+             echo env.CONTINUE_EXECUTION
          }
       }
 
@@ -62,8 +62,8 @@ pipeline {
       }
       steps {
         script {
-                     echo "Continue execution: ${env.CONTINUE_EXECUTION}"
-                     echo "Continue execution: ${CONTINUE_EXECUTION}"
+          echo "Continue execution: ${env.CONTINUE_EXECUTION}"
+          echo "Continue execution: ${CONTINUE_EXECUTION}"
 
           echo "Continue execution: ${CONTINUE}"
 
