@@ -43,7 +43,7 @@ pipeline {
 
          }
 
-            env.CONTINUE_EXECUTION "FUNZIONA?"
+            env.CONTINUE_EXECUTION = "FUNZIONA?"
             echo env.CONTINUE_EXECUTION
          }
       }
