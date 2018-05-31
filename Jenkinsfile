@@ -30,21 +30,11 @@ pipeline {
     //launch coverage test
       steps {
          script{
-             echo "currentBuild status: ${currentBuild.result}"
-             try {
-                sh 'sbt clean coverage test coverageReport'
-             }
-             catch (exc) {
-                 echo 'Something failed, I should sound the klaxons!'
-                 echo "currentBuild status: ${currentBuild.result}"
-                 echo "currentBuild status: ${error}"
-                 currentBuild.result = 'UNSTABLE'
-                 echo "currentBuild status: ${currentBuild.result}"
-
-             }
-
-             env.CONTINUE_EXECUTION = "FUNZIONA?"
-             echo env.CONTINUE_EXECUTION
+                b=(sh 'sbt clean coverage test coverageReport', propagate: false).result
+                if(b == 'FAILURE'){
+                    echo "COVERAGE TEST FAILED!"
+                    currentBuild.result = 'UNSTABLE'
+                }
          }
       }
 
